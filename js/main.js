@@ -6,30 +6,21 @@ function validateForm(){
 	var password = document.getElementById("input-password");
 	var selector= document.getElementById("selector");
 
-	if(nombre.value.trim().length == 0){
+	if(!validarInput(nombre)){
 		nombre.nextElementSibling.innerText = "Ingresar tu nombre";
 	}else{
 		nombre.nextElementSibling.innerText = "";
-		if(!primeraLetraMayus(nombre)){
-			nombre.nextElementSibling.innerText = "La primera letra debe estar en Mayuscula";
-		}else{
-			nombre.nextElementSibling.innerText = "";
-			nombre.nextElementSibling.classList.add("ocultar");
-		}
+		primeraLetraMayus(nombre);
 	}
 
-	if(apellido.value.trim().length == 0){
+	if(!validarInput(apellido)){
 		apellido.nextElementSibling.innerText = "Ingresar tu apellido";
 	}else{
 		apellido.nextElementSibling.innerText = "";
-		if(!primeraLetraMayus(apellido)){
-			apellido.nextElementSibling.innerText = "La primera Letra debe estar en mayuscula";
-		}else{
-			apellido.nextElementSibling.innerText = "";
-		}
+		primeraLetraMayus(apellido);
 	}
 
-	if(email.value.trim().length==0){
+	if(!validarInput(email)){
 		email.nextElementSibling.innerText = "Ingresar un correo electronico";
 	}else{
 		email.nextElementSibling.innerText = "";
@@ -37,27 +28,45 @@ function validateForm(){
 			email.nextElementSibling.innerText = "Segun el formato: correo@dominio.com";
 		}else{
 			email.nextElementSibling.innerText = "";
+			email.nextElementSibling.classList.add("ocultar");
 		}
 	}
 
-	if(password.value.length == 0){
+	if(!validarInput(password)){
 		password.nextElementSibling.innerText = "Debe ingresar una contraseña";
 	}else{
 		password.nextElementSibling.innerText = "";
 		if(password.value.length>=6 && password.value.length<=30){
-			password.nextElementSibling.innerText = "";
+			if(password.value!="password" && password.value != "123456" && password.value !="098754"){
+				password.nextElementSibling.innerText = "";
+				password.nextElementSibling.classList.add("ocultar");
+			}else{
+				password.nextElementSibling.innerText = "Debe ser diferente a password ó 123456 ó 098754";
+			}
+			
 		}else{
-			password.nextElementSibling.innerText = "Debe contener entre 6 a 30 caracteres";
+			password.nextElementSibling.innerText = "Debe contener entre 6 a 30 caracteres";			
 		}
 	}
 
 	if(selector.value == "0"){
+		selector.nextElementSibling.style.display = "block";
 		selector.nextElementSibling.innerText = "Seleccione alguna bicicleta";
 	}else{
 		selector.nextElementSibling.innerText = "";
+		selector.nextElementSibling.classList.add("ocultar");
 	}
 }
+function validarInput(input){
+	if(input.value.trim().length == 0){
+		input.nextElementSibling.style.display = "block";
+		return false;
+	}else{
+		input.nextElementSibling.style.display = "block";
+		return true;
+	}
 
+}
 function primeraLetraMayus(input){
 	var arrayString = input.value.trim().split(" ");
 	var cont=0;
@@ -67,7 +76,15 @@ function primeraLetraMayus(input){
 			cont++;
 		}
 	});
-	return(cont == arrayString.length)
+	if(cont != arrayString.length){
+		input.nextElementSibling.style.display = "block";
+		input.nextElementSibling.innerText = "La primera Letra debe estar en mayuscula";
+		return false;
+	}else{
+		input.nextElementSibling.innerText = "";
+		input.nextElementSibling.classList.add("ocultar");
+		return true;
+	}
 }
 
 window.addEventListener('load',function(){
