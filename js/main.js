@@ -41,7 +41,7 @@ function validateForm(){
 				password.nextElementSibling.innerText = "";
 				password.nextElementSibling.classList.add("ocultar");
 			}else{
-				password.nextElementSibling.innerText = "Debe ser diferente a password ó 123456 ó 098754";
+				password.nextElementSibling.innerText = "No debe ser: password ó 123456 ó 098754";
 			}
 			
 		}else{
@@ -72,7 +72,7 @@ function primeraLetraMayus(input){
 	var cont=0;
 	console.log(arrayString);
 	arrayString.forEach(function(elem){
-		if(elem.charAt(0)== elem.charAt(0).toUpperCase()){
+		if(elem == elem.charAt(0).toUpperCase()+elem.slice(1).toLowerCase()){
 			cont++;
 		}
 	});
